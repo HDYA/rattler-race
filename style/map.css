@@ -1,0 +1,38 @@
+.map {
+    width: 90vw;
+    height: 90vh;
+    background-color: black;
+    margin: 5vh auto;
+}
+
+.map div {
+    float: left;
+}
+
+.map div div {
+    float: left;
+}
+
+
+.map div div:nth-child(1) {
+    width: 30%;
+    height: 30%;
+}
+
+.map div div:nth-child(2) {
+    width: 70%;
+    height: 30%;
+}
+
+.map div div:nth-child(3) {
+    width: 30%;
+    height: 70%;
+}
+
+.map div.horizon-active div:nth-child(1),
+.map div.vertical-active div:nth-child(1),
+.map div.horizon-active div:nth-child(2),
+.map div.vertical-active div:nth-child(3) {
+    background-color: white;
+    opacity: 0.8;
+}
