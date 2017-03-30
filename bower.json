@@ -1,0 +1,8 @@
+{
+  "name": "rattler-race",
+  "private": "true",
+  "devDependencies": {},
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
