@@ -4,7 +4,7 @@
 var $layer;
 
 $(function () {
-    var map1 = new Map($('.map'), 50, 70);
+    var map1 = new Map($('.map'), config.map.width, config.map.height);
     window.onresize = function() {
         map1.resize();
     };
@@ -14,14 +14,13 @@ $(function () {
 
     $('#start').click(function() {
         startGame();
-        hideLayer();
     });
     $('#local').click(function() {
-        startLocalAnimation(map1, 10);
+        startLocalAnimation(map1, config.snake.number);
         hideLayer();
     });
     $('#remote').click(function() {
-        startLocalAnimation(map1, 10);
+        startLocalAnimation(map1, config.snake.number);
         hideLayer();
     });
 });
@@ -33,7 +32,7 @@ function hideLayer() {
 function startClock(map) {
     window.setInterval(function () {
         map.moveAllSnake();
-    }, 100);
+    }, config.game.clock);
 }
 
 function startGame() {

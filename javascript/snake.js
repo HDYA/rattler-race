@@ -3,7 +3,7 @@
  */
 function Snake(color, initialLength, initialDirection, actionOnDeath) {
     this.color = color || ("#" + ("00000" + ((Math.random() * 16777215 + 0.5) >> 0).toString(16)).slice(-6));
-    this.length = initialLength || (4 + (Math.random() * 3));
+    this.length = initialLength || (config.snake.length_minimum + (Math.random() * config.snake.length_variation));
     this.direction = initialDirection || parseInt(Math.random() * (this.DIRECTIONS.length - 1));
     this.actionOnDeath = actionOnDeath || (this.ACTION_ON_DEATHS.REMOVE | this.ACTION_ON_DEATHS.REBORN);
     this.positions = [];
