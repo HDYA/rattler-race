@@ -110,7 +110,11 @@ Map.prototype.moveSnakeForward = function(currentSnake) {
         if (this.checkDirection(currentSnake, nextDirection)){
             nextDirection = (nextDirection + 2) % currentSnake.DIRECTIONS.length;
             if (this.checkDirection(currentSnake, nextDirection)) {
-                nextDirection = -1;
+                if (this.checkDirection(currentSnake, currentSnake.direction)) {
+                    nextDirection = -1;
+                } else {
+                    nextDirection = this.direction;
+                }                
             }
         }
     }
@@ -143,7 +147,7 @@ Map.prototype.moveAllSnake = function() {
     var currentSnake;
     for (var currentSnakeIndex in this.snakes) {
         currentSnake = this.snakes[currentSnakeIndex];
-        if (!currentSnake.stop) {
+        if (!currentSnake.stop && !currentSnake.pivoting) {
             this.moveSnakeForward(currentSnake);
         }
     }
