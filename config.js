@@ -13,5 +13,9 @@ var config = {
         length_minimum: 4,
         length_variation: 4,
         turn_possibility: 0.1,
+    },
+    demo: {
+        ask_url: false,
+        query_interval: 1000,
     }
 };
