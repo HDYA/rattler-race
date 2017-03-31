@@ -1,11 +1,6 @@
 /**
  * Created by HDYA-Backfire on 2017-03-23.
  */
-
-var BORDER_COLOR = 'blue';
-var BACKGROUND_COLOR = 'black';
-var TURN_POSSIBILITY = 0.1;
-
 function Map($map, rows, columns) {
     this.map = $map;
     this.rows = rows;
@@ -105,7 +100,7 @@ Map.prototype.moveSnakeForward = function(currentSnake) {
     }
 
     var nextDirection = currentSnake.direction;
-    if  (this.checkDirection(currentSnake, nextDirection) || Math.random() < TURN_POSSIBILITY ){
+    if  (this.checkDirection(currentSnake, nextDirection) || Math.random() < config.snake.turn_possibility ){
         // Turn
         if (Math.random() > 0.5) {
             nextDirection = (nextDirection + 1) % currentSnake.DIRECTIONS.length;
@@ -115,7 +110,11 @@ Map.prototype.moveSnakeForward = function(currentSnake) {
         if (this.checkDirection(currentSnake, nextDirection)){
             nextDirection = (nextDirection + 2) % currentSnake.DIRECTIONS.length;
             if (this.checkDirection(currentSnake, nextDirection)) {
-                nextDirection = -1;
+                if (this.checkDirection(currentSnake, currentSnake.direction)) {
+                    nextDirection = -1;
+                } else {
+                    nextDirection = this.direction;
+                }                
             }
         }
     }
@@ -148,7 +147,7 @@ Map.prototype.moveAllSnake = function() {
     var currentSnake;
     for (var currentSnakeIndex in this.snakes) {
         currentSnake = this.snakes[currentSnakeIndex];
-        if (!currentSnake.stop) {
+        if (!currentSnake.stop && !currentSnake.pivoting) {
             this.moveSnakeForward(currentSnake);
         }
     }
@@ -172,7 +171,7 @@ Map.prototype.resize = function() {
         .css('width', elementWidth + elementHorizonMargin * 2)
         .css('height', elementHeight + elementVerticalMargin * 2)
         .css('margin', 0)
-        .css('background-color', BORDER_COLOR);
+        .css('background-color', config.map.border_color);
 };
 
 Map.prototype.initiate = function () {
