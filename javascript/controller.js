@@ -5,21 +5,21 @@ var $layer;
 
 $(function () {
     var map1 = new Map($('.map'), config.map.width, config.map.height);
-    window.onresize = function() {
+    window.onresize = function () {
         map1.resize();
     };
     map1.initiate();
 
     $layer = $('.layer');
 
-    $('#start').click(function() {
+    $('#start').click(function () {
         startGame();
     });
-    $('#local').click(function() {
+    $('#local').click(function () {
         startLocalAnimation(map1, config.snake.number);
         hideLayer();
     });
-    $('#remote').click(function() {
+    $('#remote').click(function () {
         var url = '/record';
         if (config.demo.ask_url) {
             url = prompt('Please specify url of instances status hub');
@@ -59,11 +59,12 @@ function startLocalAnimation(map, number) {
 var interval;
 var snakes = {};
 function startRemoteAnimation(map, url) {
-    interval = setInterval(function() {
+    $.ajaxSetup({ cache: false });
+    interval = setInterval(function () {
         $.ajax({
             url: url,
-            success: function(data) {
-                for(var index in data) {
+            success: function (data) {
+                for (var index in data) {
                     if (snakes[index]) {
                         snakes[index].setStatus(data[index]);
                     } else {
@@ -71,7 +72,13 @@ function startRemoteAnimation(map, url) {
                         snakes[index] = newSnake;
                         newSnake.setStatus(data[index]);
                         map.initiateSnake(newSnake);
-                    }    
+                    }
+                }
+                for (var index in snakes) {
+                    if (data[index] == undefined) {
+                        map.deleteSnake(snakes[index]);
+                        delete snakes[index];
+                    }
                 }
             }
         });
